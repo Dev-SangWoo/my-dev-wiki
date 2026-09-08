@@ -68,7 +68,7 @@ Profiler나 Performance로 확인했는가?
 
 ## Open Questions
 
-- 실제 프로젝트에서 state 위치 조정만으로 해결되는 병목과 `React.memo`/`useMemo`가 필요한 병목을 어떻게 구분할지 더 경험이 필요하다.
+없음.
 
 ## Understanding Timeline
 
@@ -80,7 +80,7 @@ Profiler나 Performance로 확인했는가?
 
 ## Connections
 
-현재 저장소에 직접 연결할 기존 지식 파일 없음.
+없음.
 
 ## Sources
 
