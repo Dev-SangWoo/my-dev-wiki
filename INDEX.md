@@ -6,7 +6,7 @@
 
 ## Frontend
 
-_아직 저장된 지식이 없음._
+- [React 렌더링, 상태 위치와 메모이제이션](frontend/react/rendering-state-and-memoization.md)
 
 ## Backend
 
