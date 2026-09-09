@@ -7,6 +7,7 @@
 ## Frontend
 
 - [React 렌더링, 상태 위치와 메모이제이션](frontend/react/rendering-state-and-memoization.md)
+- [React 상태 저장 위치 결정 플로우](frontend/react/state-location-decision-flow.md)
 
 ## Backend
 
