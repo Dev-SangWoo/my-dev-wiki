@@ -90,7 +90,7 @@ Profiler나 Performance로 확인했는가?
 
 ## Connections
 
-없음.
+- [React 상태 저장 위치 결정 플로우](state-location-decision-flow.md) — 상태를 어디에 둘지 결정하는 기준이 렌더링 범위와 상태 위치 최적화 이해로 이어진다.
 
 ## Sources
 
