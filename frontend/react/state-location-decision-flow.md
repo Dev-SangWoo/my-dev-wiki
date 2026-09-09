@@ -58,6 +58,7 @@ URL에 남아야 해? → URL
 ## Connections
 
 - [React 렌더링과 상태 위치](rendering-and-state.md) — 상태를 사용하는 곳 가까이에 둘수록 불필요한 리렌더링 범위를 줄일 수 있다는 이해와 연결된다.
+- [TanStack Query 서버 상태와 캐시 관리](tanstack-query-server-state-cache.md) — 서버가 원본인 데이터를 Server State로 판단한 뒤, 그 서버 데이터의 클라이언트 복사본을 캐싱하고 동기화하는 방법으로 이어진다.
 
 ## Sources
 
