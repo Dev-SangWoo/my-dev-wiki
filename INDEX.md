@@ -10,6 +10,7 @@
 - [React 메모이제이션과 참조 동일성](frontend/react/memoization-and-reference-equality.md)
 - [React 상태 저장 위치 결정 플로우](frontend/react/state-location-decision-flow.md)
 - [TanStack Query 서버 상태와 캐시 관리](frontend/react/tanstack-query-server-state-cache.md)
+- [Debounce와 Throttle 이벤트 최적화](frontend/react/debounce-throttle-event-optimization.md)
 
 ## Backend
 
