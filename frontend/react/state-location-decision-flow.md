@@ -57,7 +57,7 @@ URL에 남아야 해? → URL
 
 ## Connections
 
-- [React 렌더링, 상태 위치와 메모이제이션](rendering-state-and-memoization.md) — 상태를 사용하는 곳 가까이에 둘수록 불필요한 리렌더링 범위를 줄일 수 있다는 이해와 연결된다.
+- [React 렌더링과 상태 위치](rendering-and-state.md) — 상태를 사용하는 곳 가까이에 둘수록 불필요한 리렌더링 범위를 줄일 수 있다는 이해와 연결된다.
 
 ## Sources
 
