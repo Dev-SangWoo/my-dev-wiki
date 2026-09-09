@@ -57,7 +57,7 @@ staleTime: 60초
 staleTime
 → 신선도
 
- gcTime
+gcTime
 → 사용하지 않는 캐시의 보관 기간
 ```
 
@@ -176,6 +176,7 @@ const transactionKeys = {
 ## Connections
 
 - [React 상태 저장 위치 결정 플로우](state-location-decision-flow.md) — 서버가 원본을 가지고 있는 값을 Server State로 판단한 다음, 실제 클라이언트에서 그 서버 상태를 관리하는 방법으로 TanStack Query가 이어진다.
+- [Debounce와 Throttle 이벤트 최적화](debounce-throttle-event-optimization.md) — 검색처럼 Query가 너무 자주 시작될 수 있는 상황에서 Debounce로 실행 빈도를 줄이고, `enabled`와 AbortSignal로 Query 실행 조건과 이미 시작된 요청을 제어하는 흐름으로 이어진다.
 
 ## Sources
 
