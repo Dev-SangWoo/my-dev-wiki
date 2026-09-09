@@ -66,6 +66,14 @@ Profiler나 Performance로 확인했는가?
 
 9. Profiler는 React 렌더링 분석에 특화되어 있고, Performance는 JS 실행부터 브라우저 렌더링까지 더 넓고 낮은 레벨에서 본다.
 
+10. 렌더링 흐름을 `새 React 트리를 만든다 → 이전 트리와 비교한다 → 실제 반영한다`로 연결해서 이해한다.
+
+11. `React.memo`는 얕은 비교를 하기 때문에 객체, 배열, 함수처럼 렌더링 때 새로 만들어지는 값은 내용이 같아도 참조가 달라질 수 있다고 이해한다. 그래서 새 객체나 새 함수가 props로 내려오면 `React.memo`가 props 변경으로 볼 수 있다.
+
+12. `useMemo`는 dependency가 같으면 이전에 계산한 값을 계속 재사용하는 것으로 이해하고, `useCallback`은 dependency가 같으면 함수 참조를 재사용하는 것으로 구분한다. dependency가 바뀌면 새로운 값이나 함수 참조가 만들어질 수 있다.
+
+13. `React.memo`, `useMemo`, `useCallback`은 레벨이 다른 최적화라고 이해한다. `React.memo`는 컴포넌트 렌더링을 건너뛸지 판단하고, `useMemo`와 `useCallback`은 값이나 함수 참조를 안정적으로 유지하는 데 쓸 수 있어서 같이 사용되기도 한다. `React.memo`가 없다면 `useMemo`나 `useCallback`만으로 부모 리렌더링에 따른 자식 리렌더링 자체를 막는 것은 아니다.
+
 ## Open Questions
 
 없음.
@@ -77,6 +85,8 @@ Profiler나 Performance로 확인했는가?
 - 2026-09-08: 성능 문제를 보면 먼저 memoization을 붙이기보다 state 위치와 컴포넌트 구조를 먼저 본다는 관점을 형성했다.
 - 2026-09-08: `React.memo`를 단순히 "내 값이 바뀔 때만 리렌더링"하는 기능으로 보던 이해를, 부모 리렌더링 시 props가 같으면 렌더링을 건너뛰는 최적화로 교정했다.
 - 2026-09-08: Reconciliation을 리렌더링 원인이 아니라 이전/새 결과를 비교하는 과정으로 분리해서 이해했다.
+- 2026-09-09: `React.memo`의 얕은 비교와 객체/배열/함수의 참조 동일성을 연결했다.
+- 2026-09-09: `useMemo`는 값, `useCallback`은 함수 참조를 재사용하며, 이들이 `React.memo`와 서로 다른 레벨에서 협력할 수 있다는 관계를 이해했다.
 
 ## Connections
 
@@ -85,3 +95,4 @@ Profiler나 Performance로 확인했는가?
 ## Sources
 
 - 2026-09-08 대화에서 사용자가 제공한 React 렌더링/상태 학습 자료
+- 2026-09-09 React 렌더링과 메모이제이션 복습 대화
