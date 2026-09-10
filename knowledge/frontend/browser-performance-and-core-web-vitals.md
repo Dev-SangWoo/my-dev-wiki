@@ -54,6 +54,16 @@ Core Web Vitals
 → 사용자가 느끼는 주요 성능을 어떤 지표로 볼 것인가?
 ```
 
+React Profiler와 Chrome Performance는 경쟁하는 도구가 아니라 보는 범위가 다르기 때문에 필요하면 같이 사용한다.
+
+```text
+React Profiler
+→ React가 왜 많이 렌더링했지?
+
+Chrome Performance
+→ 그래서 실제 브라우저는 어디에서 오래 일했지?
+```
+
 4. 브라우저 렌더링 흐름은 다음처럼 기억한다.
 
 ```text
@@ -68,7 +78,48 @@ Paint
 Composite
 ```
 
-성능을 볼 때 `Main Thread`, `Long Task`, `Style Calculation`, `Layout`, `Paint`, `Composite`를 주요 포인트로 본다.
+변경 내용에 따라 이 단계가 항상 전부 발생하는 것은 아니지만, 성능을 볼 때 `Main Thread`, `Long Task`, `Style Calculation`, `Layout`, `Paint`, `Composite`를 주요 포인트로 본다.
+
+### Main Thread
+
+브라우저의 많은 UI 관련 작업은 Main Thread에서 실행된다고 이해한다.
+
+```text
+JavaScript 실행
+이벤트 처리
+Style 계산
+Layout
+Paint 관련 작업
+```
+
+Main Thread를 너무 오래 점유하면 클릭과 입력 처리가 늦어지고, 렌더링이나 애니메이션도 지연될 수 있다.
+
+### Long Task
+
+Main Thread의 하나의 작업이 오래 지속되면 다른 사용자 입력이나 Paint가 기다려야 할 수 있다. Chrome Performance에서는 보통 **50ms를 넘는 Main Thread 작업**을 Long Task로 보는 기준을 사용한다고 이해한다.
+
+```text
+입력
+→ 무거운 계산
+→ Main Thread 오래 점유
+→ 다음 입력 / Paint 지연
+```
+
+### Style Calculation
+
+DOM이나 CSS 조건이 달라졌을 때 어떤 CSS가 각 요소에 적용되는지 계산하는 과정이다. DOM이 매우 크거나 Style 재계산이 지나치게 자주 발생하면 비용이 커질 수 있다.
+
+### Layout
+
+요소의 너비, 높이, 위치 같은 geometry를 계산하는 과정이다. 한 요소의 크기 변화가 자식이나 주변 요소 위치에 영향을 주면 Layout 범위가 커질 수 있다.
+
+### Paint
+
+Layout 결과를 바탕으로 텍스트, 배경, border, shadow, 이미지 같은 실제 픽셀을 그리는 과정이다.
+
+### Composite
+
+여러 Layer를 적절한 순서로 합쳐 최종 화면을 만드는 과정이다. `transform` 기반 변화는 상황에 따라 Layout과 Paint를 피하고 Composite 중심으로 처리될 수 있고, `width`, `left`, `top`처럼 geometry를 바꾸는 속성은 Layout을 유발할 가능성이 크다고 이해한다.
 
 5. `Layout Thrashing`은 DOM의 크기나 위치를 읽고 쓰는 작업을 반복하면서 강제로 Layout 계산이 계속 발생하는 현상으로 이해한다.
 
@@ -80,15 +131,50 @@ Composite
 → Layout 반복
 ```
 
+가능하면 DOM 읽기와 쓰기를 섞어 반복하기보다 다음처럼 묶는 방향을 고려한다.
+
+```text
+읽기
+읽기
+읽기
+↓
+쓰기
+쓰기
+쓰기
+```
+
 6. Chrome Performance는 막연하게 오래 녹화하기보다 실제 문제 행동을 정확하게 지정해서 측정해야 한다고 이해한다.
 
 ```text
-문제 행동 지정
-→ 측정
-→ 시간이 많이 걸린 구간 확인
-→ 원인 확인
-→ 수정
-→ 다시 측정
+1. DevTools → Performance
+2. Record
+3. 문제 행동 한 번 수행
+4. Stop
+5. 해당 구간 확대
+6. Main Thread 확인
+7. Long Task 확인
+8. Call Stack 확인
+```
+
+### Flame Chart 읽기
+
+Flame Chart에서는 가로 길이와 세로 구조를 다르게 본다.
+
+```text
+가로 길이
+→ 얼마나 오래 실행됐는가?
+
+세로 구조
+→ 누가 누구를 호출했는가?
+```
+
+그래서 단순히 "클릭이 느리다"에서 끝나는 것이 아니라 다음처럼 실제 병목 함수까지 내려가는 것이 목표라고 이해한다.
+
+```text
+click
+└─ handleSearch       240ms
+   └─ filterData      180ms
+      └─ expensiveFn  150ms
 ```
 
 7. Core Web Vitals는 다음 표로 구분해서 기억한다.
@@ -98,6 +184,8 @@ Composite
 | **LCP** | Largest Contentful Paint | 첫 화면의 주요 콘텐츠가 보이는 로딩 속도 | **2.5초 이하** | 핵심 콘텐츠가 빨리 보이는가? |
 | **INP** | Interaction to Next Paint | 클릭·탭·입력 이후 다음 시각적 피드백까지의 상호작용 응답성 | **200ms 이하** | 사용자의 행동에 빨리 반응하는가? |
 | **CLS** | Cumulative Layout Shift | 예상하지 못한 화면 이동이 얼마나 발생하는지에 대한 시각적 안정성 | **0.1 이하** | 화면이 갑자기 밀리거나 흔들리지 않는가? |
+
+이 기준은 실제 사용자 경험을 볼 때 모바일과 데스크톱을 나누고 사용자 방문의 **75번째 백분위수**에서 평가하는 관점도 함께 기억한다.
 
 짧게 외우면:
 
@@ -207,6 +295,8 @@ INP 문제
 주변 콘텐츠가 덜 밀림
 ```
 
+`width`와 `height`를 알려주거나 `aspect-ratio`로 비율을 확보하는 방식으로 로드 전 공간을 잡을 수 있다.
+
 스켈레톤도 실제 콘텐츠와 크기 차이가 크면 CLS를 만들 수 있어서 다음처럼 기억한다.
 
 ```text
@@ -215,6 +305,13 @@ Skeleton의 형태
 ```
 
 11. Lighthouse는 페이지를 자동으로 검사해서 Performance, Accessibility, SEO 같은 여러 품질 영역에 대한 보고서를 만드는 도구로 이해한다.
+
+```text
+Lighthouse 100점
+≠ 실제 서비스가 모든 환경에서 무조건 빠름
+```
+
+Lighthouse는 특정 조건의 Lab Measurement이기 때문에 점수 자체를 목표로 두기보다 문제를 발견하고 원인을 좁히는 데 사용한다.
 
 12. 성능 문제를 증상과 지표로도 연결해서 본다.
 
@@ -314,7 +411,36 @@ CPU slowdown / 느린 Network
 
 따라서 성능 확인을 `내 컴퓨터에서 잘 됨`으로 끝내지 않는다.
 
-17. 성능 최적화의 전체 원칙은 다음처럼 기억한다.
+17. 지금까지 배운 내용을 성능 흐름 하나로 연결하면 다음처럼 볼 수 있다.
+
+```text
+사용자 검색 입력
+    ↓
+Debounce
+    ↓
+TanStack Query
+    ↓
+Server State
+    ↓
+React Render
+    ↓
+State 범위 판단
+    ↓
+필요한 memoization
+    ↓
+React Commit
+    ↓
+Browser
+JavaScript → Style → Layout → Paint → Composite
+    ↓
+사용자에게 화면 표시
+    ↓
+LCP / INP / CLS
+```
+
+즉 앞에서 배운 상태 위치, Debounce, 서버 상태, memoization이 결국 브라우저가 실제 화면을 만드는 비용과 사용자 경험 지표로 연결된다고 이해한다.
+
+18. 성능 최적화의 전체 원칙은 다음처럼 기억한다.
 
 ```text
 느리다
@@ -334,6 +460,16 @@ CPU slowdown / 느린 Network
 재측정
 ```
 
+성능 개선을 설명할 때도 다음 순서를 유지하면 무엇을 왜 바꿨는지가 명확해진다.
+
+```text
+측정
+→ 지표
+→ 원인 추적
+→ 해결
+→ 재측정
+```
+
 ## Quick Recall
 
 | 도구 / 지표 | 핵심 질문 |
@@ -344,6 +480,18 @@ CPU slowdown / 느린 Network
 | LCP | 핵심 콘텐츠가 빨리 보이는가? |
 | INP | 사용자 행동에 빨리 반응하는가? |
 | CLS | 화면이 안정적인가? |
+
+```text
+Main Thread 오래 점유
+→ Long Task
+→ 입력 / 렌더링 / Paint 지연 가능
+```
+
+```text
+Flame Chart
+가로 → 실행 시간
+세로 → 호출 관계
+```
 
 ```text
 INP가 나쁨
