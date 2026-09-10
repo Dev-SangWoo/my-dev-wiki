@@ -11,6 +11,7 @@
 - [React 상태 저장 위치 결정 플로우](knowledge/frontend/react/state-location-decision-flow.md)
 - [TanStack Query 서버 상태와 캐시 관리](knowledge/frontend/react/tanstack-query-server-state-cache.md)
 - [Debounce와 Throttle 이벤트 최적화](knowledge/frontend/react/debounce-throttle-event-optimization.md)
+- [브라우저 성능 측정과 Core Web Vitals](knowledge/frontend/browser-performance-and-core-web-vitals.md)
 
 ## Backend
 
