@@ -47,12 +47,59 @@ Commit Phase
    - Form State
    - Derived Value
 
+8. `setState`는 DOM을 직접 수정하는 명령이 아니라 React에게 상태가 바뀌었으니 UI를 다시 계산하라고 요청하는 것으로 이해한다.
+
+```text
+setState
+≠ DOM 직접 변경
+
+setState
+→ state update 요청
+→ 컴포넌트 다시 실행
+→ 새 UI 계산
+→ 이전 결과와 비교
+→ 필요한 DOM 변경만 Commit
+```
+
+그래서 React가 관리하는 UI를 일반적으로 직접 DOM 조작과 섞어 관리하지 않는다. React가 알고 있는 UI 상태와 실제 DOM 상태가 서로 어긋날 수 있기 때문이다.
+
+9. Context도 값이 변경되면 그 Context를 구독하는 컴포넌트들의 렌더링에 영향을 줄 수 있다고 이해한다. 하나의 Context에 변경 빈도와 책임이 다른 값을 너무 많이 묶으면 예상보다 넓은 범위가 영향을 받을 수 있다.
+
+```text
+Context value 변경
+↓
+해당 Context 소비자에게 영향
+```
+
+그래서 `Context를 쓰면 느리다`가 아니라, **변경 빈도와 책임이 다른 상태를 무조건 하나의 Context로 묶지 않는 것**이 중요하다고 이해한다.
+
+```text
+ThemeContext
+AuthContext
+ModalContext
+```
+
+처럼 책임과 변경 범위를 나누는 것을 고려할 수 있다.
+
+State Colocation과 Context 설계 모두 결국 다음 질문과 연결된다.
+
+```text
+이 값이 바뀔 때 어디까지 영향을 받아야 하지?
+```
+
 ## Quick Recall
 
 ```text
+setState → DOM 직접 변경이 아니라 React에 UI 재계산 요청
 Render Phase → 새 UI 계산 + 이전/새 트리 비교
 Reconciliation → 이전/새 React 트리를 비교하는 작업
 Commit Phase → 필요한 DOM 변경 반영
+```
+
+```text
+Context
+→ 구독하는 값이 바뀌면 소비자가 영향을 받을 수 있음
+→ 책임과 변경 빈도가 다르면 범위를 나눌지 고려
 ```
 
 ## Open Questions
@@ -66,6 +113,7 @@ Commit Phase → 필요한 DOM 변경 반영
 - 2026-09-08: 성능 문제를 보면 먼저 memoization을 붙이기보다 state 위치와 컴포넌트 구조를 먼저 본다는 관점을 형성했다.
 - 2026-09-08: Reconciliation을 리렌더링 원인이 아니라 이전/새 결과를 비교하는 과정으로 분리해서 이해했다.
 - 2026-09-09: `Render → Reconciliation → Commit`을 완전히 독립된 세 단계로 보기보다, Render Phase 안에서 새 UI 계산과 Reconciliation이 이루어지고 이후 Commit Phase에서 실제 변경을 반영하는 흐름으로 이해를 다듬었다.
+- 2026-09-10: `setState`를 DOM 직접 변경이 아니라 React에 재계산을 요청하는 업데이트로 연결하고, Context도 변경 범위와 책임을 고려해 설계해야 한다는 이해를 보강했다.
 
 ## Connections
 
@@ -76,3 +124,4 @@ Commit Phase → 필요한 DOM 변경 반영
 
 - 2026-09-08 대화에서 사용자가 제공한 React 렌더링/상태 학습 자료
 - 2026-09-09 React 렌더링과 메모이제이션 복습 대화
+- 2026-09-10 1강 누락 개념 복습 및 이해 확인 대화
