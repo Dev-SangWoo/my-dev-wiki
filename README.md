@@ -8,7 +8,7 @@
 
 - `AGENTS.md` — 모든 에이전트가 항상 지켜야 할 핵심 원칙
 - `INDEX.md` — 지식 탐색의 시작점
-- `knowledge/` — 실제 개발 지식
+- `knowledge/` — 실제 개발 지식. 지식이 생긴 domain만 필요할 때 생성
 - `.agent/store.md` — 지식 저장 workflow
 - `.agent/recall.md` — 기억 회상 workflow
 - `.agent/review.md` — 복습 workflow
