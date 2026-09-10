@@ -20,6 +20,47 @@
 
 9. 성능 최적화는 `실제로 느린지 확인 → 수치로 측정 → state 위치 때문에 렌더 범위가 넓은지 확인 → 구조적으로 해결 → 그래도 비싼 계산이나 참조 문제가 남으면 memoization 적용 → 다시 측정` 순서로 생각한다.
 
+10. 리렌더링 자체는 React가 UI를 다시 계산하는 정상 동작이고, 목표는 리렌더링을 없애는 것이 아니라 **비싸고 불필요한 리렌더링이나 계산을 줄이는 것**이라고 이해한다.
+
+11. `useCallback`의 dependency를 잘못 관리하면 함수가 생성될 당시의 값을 계속 참조하는 `Stale Closure` 문제가 생길 수 있다고 이해한다.
+
+```tsx
+const logCount = useCallback(() => {
+  console.log(count);
+}, []);
+```
+
+위처럼 `count`를 사용하면서 dependency가 비어 있으면 이전 값을 계속 볼 수 있다.
+
+필요하면 dependency를 정확히 넣는다.
+
+```tsx
+const logCount = useCallback(() => {
+  console.log(count);
+}, [count]);
+```
+
+state를 갱신하는 목적이라면 함수형 업데이트를 사용해서 값 자체를 dependency로 잡지 않아도 되는 경우도 있다.
+
+```tsx
+const handleAdd = useCallback(() => {
+  setCount((current) => current + 1);
+}, []);
+```
+
+12. React Profiler는 단순히 "느린 것 같다"고 추측하는 대신 실제 렌더링을 측정하고 원인을 추적하는 도구로 이해한다.
+
+```text
+Record 시작
+→ 문제 행동 재현
+→ Record 종료
+→ Commit 확인
+→ 어떤 컴포넌트가 렌더링됐는지 확인
+→ 왜 렌더링됐는지 원인 추적
+→ 구조 개선 또는 필요한 memoization 적용
+→ 다시 측정
+```
+
 ## Quick Recall
 
 ```text
@@ -44,6 +85,12 @@ useCallback → 함수 참조 레벨
 새 객체/배열/함수
 → 내용이 같아도 참조가 다를 수 있음
 → React.memo의 얕은 비교에서 props 변경으로 판단될 수 있음
+```
+
+```text
+useCallback dependency 누락
+→ 함수가 생성될 당시 값을 계속 참조할 수 있음
+→ Stale Closure 주의
 ```
 
 ## 성능 최적화 판단 플로우
@@ -91,6 +138,8 @@ useCallback → 함수 참조 레벨
 - 2026-09-09: `useMemo`는 값, `useCallback`은 함수 참조를 재사용하며, 이들이 `React.memo`와 서로 다른 레벨에서 협력할 수 있다는 관계를 이해했다.
 - 2026-09-09: `React.memo`가 없어도 `useMemo`는 렌더링 중 재계산을 줄일 수 있지만 자식 리렌더링 자체를 막지는 못하며, `useCallback`은 주로 함수 참조 안정화를 위한 것이라고 구분했다.
 - 2026-09-10: 성능 문제를 바로 메모이제이션으로 해결하기보다 먼저 재현·측정하고, state 위치와 컴포넌트 구조를 확인한 뒤 필요한 최적화를 적용하고 다시 측정하는 흐름으로 정리했다.
+- 2026-09-10: 리렌더링 자체를 없애는 것이 목적이 아니라 비싸고 불필요한 작업을 줄이는 것이 목적이라는 관점을 명확히 했다.
+- 2026-09-10: `useCallback`의 dependency와 Stale Closure 문제를 연결하고, Profiler를 Record → 문제 행동 → Commit 확인 → 원인 추적 → 재측정 흐름으로 이해를 확장했다.
 
 ## Connections
 
@@ -101,3 +150,4 @@ useCallback → 함수 참조 레벨
 - 2026-09-08 대화에서 사용자가 제공한 React 렌더링/상태 학습 자료
 - 2026-09-09 React 렌더링과 메모이제이션 복습 대화
 - 2026-09-10 React 성능 최적화 판단 흐름 정리 대화
+- 2026-09-10 `React.memo`, `useMemo`, `useCallback`, React Profiler 5강 학습 자료
