@@ -91,26 +91,20 @@ Composite
 → 다시 측정
 ```
 
-7. Core Web Vitals의 핵심은 다음 세 가지로 기억한다.
+7. Core Web Vitals는 다음 표로 구분해서 기억한다.
+
+| 지표 | 전체 이름 | 무엇을 보는가 | 좋은 기준 | 머릿속 질문 |
+| --- | --- | --- | --- | --- |
+| **LCP** | Largest Contentful Paint | 첫 화면의 주요 콘텐츠가 보이는 로딩 속도 | **2.5초 이하** | 핵심 콘텐츠가 빨리 보이는가? |
+| **INP** | Interaction to Next Paint | 클릭·탭·입력 이후 다음 시각적 피드백까지의 상호작용 응답성 | **200ms 이하** | 사용자의 행동에 빨리 반응하는가? |
+| **CLS** | Cumulative Layout Shift | 예상하지 못한 화면 이동이 얼마나 발생하는지에 대한 시각적 안정성 | **0.1 이하** | 화면이 갑자기 밀리거나 흔들리지 않는가? |
+
+짧게 외우면:
 
 ```text
-LCP
-→ 로딩
-→ Largest Contentful Paint
-→ 주요 콘텐츠가 보일 때까지
-→ 좋은 기준 2.5초 이하
-
-INP
-→ 상호작용
-→ Interaction to Next Paint
-→ 사용자 행동 뒤 다음 시각적 피드백까지
-→ 좋은 기준 200ms 이하
-
-CLS
-→ 시각적 안정성
-→ Cumulative Layout Shift
-→ 화면이 갑자기 밀리거나 흔들리는 정도
-→ 좋은 기준 0.1 이하
+LCP → 로딩
+INP → 상호작용
+CLS → 시각적 안정성
 ```
 
 8. LCP는 첫 화면의 중요한 콘텐츠가 얼마나 빨리 보이는지를 본다고 이해한다. 중요한 Hero 이미지가 JavaScript 실행이나 API 요청 뒤에야 발견되면 이미지 요청 자체가 늦어져 LCP가 나빠질 수 있다.
@@ -163,7 +157,11 @@ React 업데이트
 Paint
 ```
 
-그래서 INP가 좋지 않다고 무조건 `useMemo`를 붙이는 것이 아니라 먼저 Performance에서 어디가 느린지 확인해야 한다.
+### INP가 좋지 않을 때 어떻게 해결할까?
+
+중요한 것은 `INP가 나쁘다 → useMemo`처럼 바로 해결책을 정하지 않는 것이다.
+
+먼저 Chrome Performance에서 어디에서 시간이 길어졌는지 확인한다.
 
 ```text
 Input Delay가 긴가?
@@ -172,7 +170,30 @@ Render가 긴가?
 Paint가 긴가?
 ```
 
-원인에 따라 `useMemo`, 서버 계산, Web Worker, 작업 분할, virtualization, 렌더링 범위 감소 등을 고려할 수 있다고 이해한다.
+원인을 확인한 뒤 상황에 따라 다음 해결 후보를 고려한다.
+
+| 상황 / 문제 | 고려할 해결 후보 |
+| --- | --- |
+| 같은 비싼 계산이 불필요하게 반복됨 | `useMemo` 고려 |
+| 클라이언트에서 하기 너무 큰 계산 | 서버에서 계산하는 방법 고려 |
+| Main Thread를 오래 점유하는 무거운 계산 | Web Worker 활용 고려 |
+| 하나의 작업이 너무 길게 Main Thread를 점유함 | 작업 분할 고려 |
+| 한 번에 너무 많은 리스트를 렌더링함 | virtualization 고려 |
+| 관계없는 컴포넌트까지 넓게 렌더링됨 | 렌더링 범위 감소, State Colocation / 컴포넌트 분리 고려 |
+
+머릿속에서는 다음처럼 기억한다.
+
+```text
+INP 문제
+↓
+어디가 느린지 측정
+↓
+원인 확인
+↓
+그 원인에 맞는 해결책 선택
+```
+
+즉 `useMemo`, 서버 계산, Web Worker, 작업 분할, virtualization, 렌더링 범위 감소는 모두 해결 **후보**이고, 어떤 것을 사용할지는 측정한 병목에 따라 결정한다.
 
 10. CLS는 화면이 갑자기 밀리거나 크기가 변하는 시각적 불안정성을 본다고 이해한다. 이미지 크기를 미리 알려주면 이미지가 로드되기 전에 공간을 확보해서 주변 콘텐츠가 덜 밀릴 수 있다.
 
@@ -195,7 +216,18 @@ Skeleton의 형태
 
 11. Lighthouse는 페이지를 자동으로 검사해서 Performance, Accessibility, SEO 같은 여러 품질 영역에 대한 보고서를 만드는 도구로 이해한다.
 
-12. 성능 최적화의 전체 원칙은 다음처럼 기억한다.
+12. 성능 문제를 증상과 지표로도 연결해서 본다.
+
+| 증상 | 우선 볼 지표 | 대표적으로 의심할 부분 |
+| --- | --- | --- |
+| 첫 화면 핵심 이미지가 늦게 보임 | LCP | 이미지 요청 시점, 서버, JavaScript |
+| 버튼을 눌렀는데 반응이 늦음 | INP | Long Task, 무거운 이벤트 처리나 렌더링 |
+| 검색 입력이 버벅임 | INP | 계산, 리렌더링 |
+| 이미지가 나타나면서 화면이 밀림 | CLS | 이미지 크기 미지정, 공간 미확보 |
+| Hero 영역이 늦게 나타남 | LCP | lazy loading, JavaScript 이후 늦은 리소스 발견 |
+| 로딩 후 카드 위치가 바뀜 | CLS | Skeleton과 실제 콘텐츠 크기 차이 |
+
+13. 성능 최적화의 전체 원칙은 다음처럼 기억한다.
 
 ```text
 느리다
@@ -217,24 +249,22 @@ Skeleton의 형태
 
 ## Quick Recall
 
-```text
-React Profiler
-→ React가 왜 많이 렌더링했지?
-
-Chrome Performance
-→ 브라우저가 어디서 오래 일했지?
-
-Lighthouse
-→ 페이지 품질에 어떤 문제가 있지?
-
-Core Web Vitals
-→ LCP / INP / CLS로 사용자 경험 성능을 본다
-```
+| 도구 / 지표 | 핵심 질문 |
+| --- | --- |
+| React Profiler | React가 왜 많이 렌더링했지? |
+| Chrome Performance | 브라우저가 어디서 오래 일했지? |
+| Lighthouse | 페이지 품질에 어떤 문제가 있지? |
+| LCP | 핵심 콘텐츠가 빨리 보이는가? |
+| INP | 사용자 행동에 빨리 반응하는가? |
+| CLS | 화면이 안정적인가? |
 
 ```text
-LCP → 로딩
-INP → 상호작용
-CLS → 시각적 안정성
+INP가 나쁨
+≠ 무조건 useMemo
+
+측정
+→ Input Delay / Event Handler / Render / Paint 확인
+→ 원인에 맞는 해결책 선택
 ```
 
 ## Open Questions
