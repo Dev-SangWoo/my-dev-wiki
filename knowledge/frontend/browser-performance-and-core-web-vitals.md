@@ -227,7 +227,94 @@ Skeleton의 형태
 | Hero 영역이 늦게 나타남 | LCP | lazy loading, JavaScript 이후 늦은 리소스 발견 |
 | 로딩 후 카드 위치가 바뀜 | CLS | Skeleton과 실제 콘텐츠 크기 차이 |
 
-13. 성능 최적화의 전체 원칙은 다음처럼 기억한다.
+13. `Lab Data`와 `Field Data`는 역할이 다르다고 이해한다.
+
+| 구분 | 의미 | 예시 | 어디에 좋은가 |
+| --- | --- | --- | --- |
+| **Lab Data** | 개발자가 통제된 환경에서 측정 | Lighthouse, Chrome DevTools, 로컬 테스트 | 재현, 디버깅, 수정 전후 비교 |
+| **Field Data** | 실제 사용자가 사용하는 환경에서 수집 | CrUX, RUM, 실사용자 Web Vitals | 실제 기기·네트워크·사용자 행동에서 문제가 있는지 확인 |
+
+머릿속에서는 다음처럼 구분한다.
+
+```text
+Lab
+→ 원인을 찾는 데 좋음
+
+Field
+→ 실제 문제가 있는지 확인하는 데 좋음
+```
+
+즉 Lighthouse 점수만 좋다고 실제 모든 사용자의 경험도 좋다고 단정하지 않는다.
+
+14. Lighthouse 결과는 점수만 보고 끝내지 않고, 문제가 되는 지표에서 실제 원인까지 내려가서 본다.
+
+```text
+Performance 72점
+↓
+왜 72점이지?
+↓
+LCP가 4.1초네
+↓
+LCP Element가 Hero Image네
+↓
+Network에서 이미지 요청 시작이 늦네
+↓
+왜 늦지?
+↓
+JavaScript 실행 후 이미지가 만들어지네
+```
+
+전체 흐름은 다음처럼 기억한다.
+
+```text
+Lighthouse
+→ 문제 발견
+
+Performance / Network
+→ 원인 분석
+
+코드
+→ 해결
+
+다시 Lighthouse
+→ 결과 검증
+```
+
+15. 성능 문제를 만나면 먼저 어떤 사용자 행동에서 느린지 정하고, React 문제인지 브라우저 문제인지 네트워크 문제인지 범위를 좁힌 뒤 적절한 도구를 사용한다.
+
+```text
+느리다
+↓
+어떤 사용자 행동에서?
+↓
+React 문제인가?
+브라우저 문제인가?
+네트워크 문제인가?
+↓
+Profiler / Performance / Network
+↓
+가장 큰 병목 확인
+↓
+수정
+↓
+다시 측정
+```
+
+핵심은 **코드부터 고치지 않는 것**이다.
+
+16. 개발 환경에서 잘 동작한다고 실제 사용자 환경에서도 빠르다고 판단하지 않는다. 고성능 CPU와 빠른 네트워크에서는 문제가 가려질 수 있기 때문에 Chrome Performance의 CPU / Network throttling으로 느린 환경을 모의해서 볼 수 있다고 이해한다.
+
+```text
+내 PC
+→ 검색 부드러움
+
+CPU slowdown / 느린 Network
+→ 검색 버벅임 확인 가능
+```
+
+따라서 성능 확인을 `내 컴퓨터에서 잘 됨`으로 끝내지 않는다.
+
+17. 성능 최적화의 전체 원칙은 다음처럼 기억한다.
 
 ```text
 느리다
@@ -267,6 +354,22 @@ INP가 나쁨
 → 원인에 맞는 해결책 선택
 ```
 
+```text
+Lab
+→ 원인 찾기
+
+Field
+→ 실제 사용자 문제 확인
+```
+
+```text
+Lighthouse
+→ 문제 발견
+→ Performance / Network로 원인 분석
+→ 코드 수정
+→ 다시 측정
+```
+
 ## Open Questions
 
 없음.
@@ -277,6 +380,7 @@ INP가 나쁨
 - 2026-09-10: React Render/Commit 뒤에도 브라우저의 JavaScript → Style → Layout → Paint → Composite 과정이 이어진다는 흐름을 연결했다.
 - 2026-09-10: React Profiler, Chrome Performance, Lighthouse, Core Web Vitals의 역할을 서로 다른 관점의 성능 도구와 지표로 구분했다.
 - 2026-09-10: LCP는 로딩, INP는 상호작용 응답성, CLS는 시각적 안정성으로 연결하고 각 문제의 원인을 측정해서 해결책을 선택한다는 관점을 형성했다.
+- 2026-09-10: Lab Data와 Field Data의 역할을 구분하고, Lighthouse 점수에서 실제 원인까지 내려가 분석한 뒤 느린 기기와 네트워크 조건에서도 다시 검증하는 흐름을 추가했다.
 
 ## Connections
 
