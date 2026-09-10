@@ -144,6 +144,7 @@ useCallback dependency 누락
 ## Connections
 
 - [React 렌더링과 상태 위치](rendering-and-state.md) — 메모이제이션을 적용하기 전에 렌더링 범위와 상태 위치를 먼저 보는 관점과 연결된다.
+- [브라우저 성능 측정과 Core Web Vitals](../browser-performance-and-core-web-vitals.md) — React 내부의 렌더링 최적화를 실제 브라우저 Main Thread, Layout, Paint와 사용자 경험 지표 측정으로 확장하는 흐름과 연결된다.
 
 ## Sources
 
