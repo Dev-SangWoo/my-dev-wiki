@@ -533,6 +533,7 @@ Lighthouse
 ## Connections
 
 - [React 메모이제이션과 참조 동일성](react/memoization-and-reference-equality.md) — React 내부의 렌더링과 계산 최적화를 실제 브라우저 Main Thread와 렌더링 비용 측정으로 확장하는 흐름으로 연결된다.
+- [프론트엔드 번들·자원 로딩 최적화](bundle-and-resource-loading-optimization.md) — LCP·CLS·초기 JavaScript와 이미지 병목을 Bundle, Lazy Loading, 이미지 최적화, Prefetch/Preload 같은 실제 자원 로딩 전략으로 해결하는 흐름으로 이어진다.
 
 ## Sources
 
