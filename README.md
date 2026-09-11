@@ -14,7 +14,21 @@
 
 ```mermaid
 graph LR
-    EMPTY["아직 연결된 지식이 없습니다"]
+    rendering["React 렌더링과 상태 위치"]
+    state["React 상태 저장 위치 결정"]
+    memo["React 메모이제이션과 참조 동일성"]
+    query["TanStack Query 서버 상태와 캐시"]
+    debounce["Debounce와 Throttle"]
+    browser["브라우저 성능과 Core Web Vitals"]
+    loading["번들·자원 로딩 최적화"]
+
+    rendering --- state
+    rendering --- memo
+    rendering --- query
+    state --- query
+    query --- debounce
+    memo --- browser
+    browser --- loading
 ```
 
 ## Structure
