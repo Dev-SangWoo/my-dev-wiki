@@ -24,4 +24,4 @@ _아직 저장된 지식이 없음._
 
 ## Computer Science
 
-_아직 저장된 지식이 없음._
+- [시간복잡도와 입력 크기로 풀이 판단하기](knowledge/computer-science/algorithms/time-complexity-and-input-size.md)
