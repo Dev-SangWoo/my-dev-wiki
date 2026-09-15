@@ -25,3 +25,4 @@ _아직 저장된 지식이 없음._
 ## Computer Science
 
 - [시간복잡도와 입력 크기로 풀이 판단하기](knowledge/computer-science/algorithms/time-complexity-and-input-size.md)
+- [Python 리스트·문자열 순회와 슬라이싱](knowledge/computer-science/algorithms/python-list-string-traversal.md)
