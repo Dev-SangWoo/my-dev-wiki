@@ -21,6 +21,8 @@ graph LR
     debounce["Debounce와 Throttle"]
     browser["브라우저 성능과 Core Web Vitals"]
     loading["번들·자원 로딩 최적화"]
+    complexity["시간복잡도와 입력 크기"]
+    pylist["Python 리스트·문자열 순회와 슬라이싱"]
 
     rendering --- state
     rendering --- memo
@@ -29,6 +31,7 @@ graph LR
     query --- debounce
     memo --- browser
     browser --- loading
+    complexity --- pylist
 ```
 
 ## Structure
