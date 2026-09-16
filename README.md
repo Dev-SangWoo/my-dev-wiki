@@ -23,6 +23,8 @@ graph LR
     loading["번들·자원 로딩 최적화"]
     complexity["시간복잡도와 입력 크기"]
     pylist["Python 리스트·문자열 순회와 슬라이싱"]
+    tsjs["TypeScript와 JavaScript의 관계"]
+    tsconfig["TypeScript tsconfig와 엄격한 타입 검사"]
 
     rendering --- state
     rendering --- memo
@@ -32,6 +34,7 @@ graph LR
     memo --- browser
     browser --- loading
     complexity --- pylist
+    tsjs --- tsconfig
 ```
 
 ## Structure
