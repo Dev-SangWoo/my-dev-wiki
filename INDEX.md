@@ -6,6 +6,7 @@
 
 ## Frontend
 
+- [JavaScript 기본형·참조형과 복사](knowledge/frontend/javascript/data-types-reference-and-copy.md)
 - [React 렌더링과 상태 위치](knowledge/frontend/react/rendering-and-state.md)
 - [React 메모이제이션과 참조 동일성](knowledge/frontend/react/memoization-and-reference-equality.md)
 - [React 상태 저장 위치 결정 플로우](knowledge/frontend/react/state-location-decision-flow.md)
