@@ -38,7 +38,7 @@ TypeScript
 
 ## Connections
 
-없음.
+- [TypeScript tsconfig와 엄격한 타입 검사](tsconfig-strict-type-checking.md) — TypeScript의 정적 타입 검사를 프로젝트에서 얼마나 엄격하게 적용할지 설정하는 관점과 연결된다.
 
 ## Sources
 
