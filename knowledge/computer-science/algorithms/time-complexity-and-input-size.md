@@ -42,6 +42,7 @@ N이 큰데 O(N²) → 다른 풀이를 찾아야 하는지 먼저 의심
 ## Connections
 
 - [Python 리스트·문자열 순회와 슬라이싱](python-list-string-traversal.md) — 슬라이싱처럼 한 번은 `O(N)`인 연산도 반복문 안에서 여러 번 수행하면 전체 복잡도가 커질 수 있다는 판단과 연결된다.
+- [Python dict·set과 해시 조회](python-dict-set-hash-lookup.md) — 반복해서 전체 배열을 찾는 대신 평균 O(1) 해시 조회를 사용해 중첩 탐색의 시간복잡도를 줄이는 판단과 연결된다.
 
 ## Sources
 
