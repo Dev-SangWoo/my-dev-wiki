@@ -14,6 +14,7 @@
 
 ```mermaid
 graph LR
+    jsdata["JavaScript 기본형·참조형과 복사"]
     rendering["React 렌더링과 상태 위치"]
     state["React 상태 저장 위치 결정"]
     memo["React 메모이제이션과 참조 동일성"]
@@ -26,6 +27,7 @@ graph LR
     tsjs["TypeScript와 JavaScript의 관계"]
     tsconfig["TypeScript tsconfig와 엄격한 타입 검사"]
 
+    jsdata --- memo
     rendering --- state
     rendering --- memo
     rendering --- query
