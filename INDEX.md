@@ -13,6 +13,7 @@
 - [Debounce와 Throttle 이벤트 최적화](knowledge/frontend/react/debounce-throttle-event-optimization.md)
 - [브라우저 성능 측정과 Core Web Vitals](knowledge/frontend/browser-performance-and-core-web-vitals.md)
 - [프론트엔드 번들·자원 로딩 최적화](knowledge/frontend/bundle-and-resource-loading-optimization.md)
+- [TypeScript와 JavaScript의 관계](knowledge/frontend/typescript/typescript-javascript-relationship.md)
 
 ## Backend
 
