@@ -36,6 +36,7 @@ append + join → 문자열을 반복 생성하지 않고 모아서 한 번에 �
 ## Connections
 
 - [시간복잡도와 입력 크기로 풀이 판단하기](time-complexity-and-input-size.md) — 슬라이싱이나 문자열 처리도 반복문 안에서 반복되면 전체 시간복잡도가 커질 수 있다는 판단과 연결된다.
+- [Python 정렬과 인접 비교](python-sorting-and-adjacent-comparison.md) — 인접한 원소를 비교할 때 `i+1`, `i-1`이 리스트 범위를 벗어나지 않도록 순회 범위를 조정하는 판단과 연결된다.
 
 ## Sources
 
