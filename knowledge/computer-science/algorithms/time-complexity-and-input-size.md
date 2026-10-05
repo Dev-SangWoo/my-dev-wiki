@@ -44,6 +44,7 @@ N이 큰데 O(N²) → 다른 풀이를 찾아야 하는지 먼저 의심
 - [Python 리스트·문자열 순회와 슬라이싱](python-list-string-traversal.md) — 슬라이싱처럼 한 번은 `O(N)`인 연산도 반복문 안에서 여러 번 수행하면 전체 복잡도가 커질 수 있다는 판단과 연결된다.
 - [Python dict·set과 해시 조회](python-dict-set-hash-lookup.md) — 반복해서 전체 배열을 찾는 대신 평균 O(1) 해시 조회를 사용해 중첩 탐색의 시간복잡도를 줄이는 판단과 연결된다.
 - [Python 정렬과 인접 비교](python-sorting-and-adjacent-comparison.md) — 정렬 `O(N log N)`을 사용해 모든 쌍 비교 `O(N²)`보다 비교 범위를 줄이는 문제 접근과 연결된다.
+- [Python Stack / Queue와 처리 순서](python-stack-queue-processing-order.md) — Queue 구현에서 `pop(0)` 대신 `deque.popleft()`를 사용해 앞 원소 제거 비용을 O(N)에서 O(1)로 줄이는 판단과 연결된다.
 
 ## Sources
 
