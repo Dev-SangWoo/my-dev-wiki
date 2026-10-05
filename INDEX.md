@@ -31,3 +31,4 @@ _아직 저장된 지식이 없음._
 - [Python 리스트·문자열 순회와 슬라이싱](knowledge/computer-science/algorithms/python-list-string-traversal.md)
 - [Python dict·set과 해시 조회](knowledge/computer-science/algorithms/python-dict-set-hash-lookup.md)
 - [Python 정렬과 인접 비교](knowledge/computer-science/algorithms/python-sorting-and-adjacent-comparison.md)
+- [Python Stack / Queue와 처리 순서](knowledge/computer-science/algorithms/python-stack-queue-processing-order.md)
