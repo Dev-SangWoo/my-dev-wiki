@@ -27,6 +27,7 @@ graph LR
     pyhash["Python dict·set과 해시 조회"]
     pysort["Python 정렬과 인접 비교"]
     pystack["Python Stack / Queue와 처리 순서"]
+    pybrute["Python 완전탐색, 순열·조합"]
     tsjs["TypeScript와 JavaScript의 관계"]
     tsconfig["TypeScript tsconfig와 엄격한 타입 검사"]
 
@@ -42,6 +43,7 @@ graph LR
     complexity --- pyhash
     complexity --- pysort
     complexity --- pystack
+    complexity --- pybrute
     pylist --- pysort
     pylist --- pystack
     tsjs --- tsconfig
