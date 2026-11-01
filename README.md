@@ -28,6 +28,7 @@ graph LR
     pysort["Python 정렬과 인접 비교"]
     pystack["Python Stack / Queue와 처리 순서"]
     pybrute["Python 완전탐색, 순열·조합"]
+    pywindow["Python Two Pointer와 Sliding Window"]
     tsjs["TypeScript와 JavaScript의 관계"]
     tsconfig["TypeScript tsconfig와 엄격한 타입 검사"]
 
@@ -44,6 +45,7 @@ graph LR
     complexity --- pysort
     complexity --- pystack
     complexity --- pybrute
+    complexity --- pywindow
     pylist --- pysort
     pylist --- pystack
     tsjs --- tsconfig
