@@ -47,6 +47,8 @@ N이 큰데 O(N²) → 다른 풀이를 찾아야 하는지 먼저 의심
 - [Python Stack / Queue와 처리 순서](python-stack-queue-processing-order.md) — Queue 구현에서 `pop(0)` 대신 `deque.popleft()`를 사용해 앞 원소 제거 비용을 O(N)에서 O(1)로 줄이는 판단과 연결된다.
 - [Python 완전탐색, 순열·조합과 경우의 수](python-bruteforce-permutations-combinations.md) — 겉의 반복문 개수가 아닌 실제 생성되는 경우의 수로 `O(N²)`, `O(N³)`을 판단하는 감각과 연결된다.
 
+- [Python Two Pointer와 Sliding Window의 구간 이동](python-two-pointer-sliding-window.md) — 두 포인터가 한 방향으로만 움직이면 중첩된 while이 있어도 전체 이동 횟수로 O(N)을 설명할 수 있다는 점과 연결된다.
+
 ## Sources
 
 - 2026-09-16 `Studying-Algorithm-Python` Day 1 학습 대화
