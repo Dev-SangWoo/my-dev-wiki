@@ -33,3 +33,4 @@ _아직 저장된 지식이 없음._
 - [Python 정렬과 인접 비교](knowledge/computer-science/algorithms/python-sorting-and-adjacent-comparison.md)
 - [Python Stack / Queue와 처리 순서](knowledge/computer-science/algorithms/python-stack-queue-processing-order.md)
 - [Python 완전탐색, 순열·조합과 경우의 수](knowledge/computer-science/algorithms/python-bruteforce-permutations-combinations.md)
+- [Python Two Pointer와 Sliding Window의 구간 이동](knowledge/computer-science/algorithms/python-two-pointer-sliding-window.md)
